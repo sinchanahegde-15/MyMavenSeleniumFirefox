@@ -8,28 +8,40 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 public class App {
     public static void main(String[] args) {
 
+        //  Setup Firefox for Jenkins (Headless mode)
         FirefoxOptions options = new FirefoxOptions();
-        options.setBinary("/usr/bin/firefox");
+        options.addArguments("--headless");              // REQUIRED
+        options.addArguments("--no-sandbox");            // Recommended
+        options.addArguments("--disable-dev-shm-usage"); // Recommended
 
         WebDriver driver = new FirefoxDriver(options);
 
-        driver.get("https://www.saucedemo.com/");
-        driver.manage().window().maximize();
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
+        try {
+            // ---- Test 1: SauceDemo Login ----
+            driver.get("https://www.saucedemo.com/");
+            driver.findElement(By.id("user-name")).sendKeys("standard_user");
+            driver.findElement(By.id("password")).sendKeys("secret_sauce");
+            driver.findElement(By.id("login-button")).click();
 
-        driver.get("https://practicetestautomation.com/practice-test-login/");
-        driver.manage().window().maximize();
-        driver.findElement(By.id("username")).sendKeys("student");
-        driver.findElement(By.id("password")).sendKeys("Password123");
-        driver.findElement(By.id("submit")).click();
+            // ---- Test 2: Practice Test Login ----
+            driver.get("https://practicetestautomation.com/practice-test-login/");
+            driver.findElement(By.id("username")).sendKeys("student");
+            driver.findElement(By.id("password")).sendKeys("Password123");
+            driver.findElement(By.id("submit")).click();
 
-        driver.get("https://automationexercise.com/products");
-        driver.manage().window().maximize();
-        driver.findElement(By.id("search_product")).sendKeys("Blue top");
-        driver.findElement(By.id("submit_search")).click();
+            // ---- Test 3: Product Search ----
+            driver.get("https://automationexercise.com/products");
+            driver.findElement(By.id("search_product")).sendKeys("blue top");
+            driver.findElement(By.id("submit_search")).click();
 
-        driver.quit();
+            System.out.println("All test cases executed successfully ");
+
+        } catch (Exception e) {
+            System.out.println("Error occurred: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // Close browser
+            driver.quit();
+        }
     }
 }
