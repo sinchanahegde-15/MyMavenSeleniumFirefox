@@ -5,7 +5,8 @@
   <artifactId>MyMavenSeleniumFirefox</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>MyMavenSeleniumFirefox</name>
+  <name>MyMavenSeleniumFirefox
+  </name>
   <url>http://maven.apache.org</url>
   
   
